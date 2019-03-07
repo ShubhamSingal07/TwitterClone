@@ -1,10 +1,13 @@
-const route=require('express').Router()
-const {fetchUsers,fetchTweets}=require('../../controllers/fetchUsers')
+const route = require('express').Router()
+const { fetchUsers, fetchTweets } = require('../../controllers')
 
-route.get('/',(req,res)=>{
+route.get('/', (req, res) => {
     res.send({
-        users:fetchUsers(),
-        tweets:fetchTweets()
+        homePage: true,
+        users: fetchUsers(),
+        tweets: fetchTweets()
     })
 })
+
+module.exports = route
 

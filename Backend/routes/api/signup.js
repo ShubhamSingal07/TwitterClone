@@ -1,9 +1,9 @@
 const route = require('express').Router()
 const { User } = require('../../db/models')
 
-route.get('/',(req,res)=>[
+route.get('/', (req, res) => [
     res.send({
-        message:'Signup Page'
+        signupPage: true
     })
 ])
 
@@ -24,5 +24,5 @@ route.post('/', async (req, res) => {
 
 })
 
-module.exports=route
+module.exports = route
 
