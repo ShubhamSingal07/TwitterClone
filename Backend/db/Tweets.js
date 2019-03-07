@@ -1,7 +1,10 @@
-const { MongoClient } = require('mongodb')
-const url = 'mongodb://localhost:27017'
-const twitterdbname = 'twitterdb'
-const twitter = 'twitter'
+const {
+    MongoClient,
+    url,
+    twitterdbname,
+    twitter
+} = require('./mongo')
+const tweetid=0
 
 const fetchTweets = async (userid) => {
     try {
@@ -25,36 +28,26 @@ const addTweet = async (userid, tweet) => {
         const client = MongoClient.connect(url)
         const twitterdb = client.db(twitterdbname)
         const tweets = twitterdb.collection(twitter)
+        tweetid++
         const tweetsArr = await tweets.updateOne(
             { userid },
             {
                 $push: {
                     tweets: {
+                        tweetid,
                         tweet,
                         likes: 0,
-                        likedby:[]
+                        likedby: []
                     }
                 }
             }
-        )
+        ).toArray()
 
         return tweetsArr
     } catch (err) {
         throw err
     }
 
-}
-
-const manageLikes = async (likes) => {
-    try {
-        const client = await MongoClient.connect(url)
-        const twitterdb=client.db(twitterdbname)
-        const tweets=twitterdb.collection(twitter)
-        
-        tweets.update({})
-    } catch (err) {
-        throw err
-    }
 }
 
 module.exports = {

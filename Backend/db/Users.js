@@ -1,7 +1,9 @@
-const { MongoClient } = require('mongodb')
-const url = 'mongodb://localhost:27017'
-const twitterdbname = 'twitterdb'
-const twitter = 'twitter'
+const {
+    MongoClient,
+    url,
+    twitterdbname,
+    twitter
+} = require('./mongo')
 let userid = 0
 
 const fetchUsers = async () => {
