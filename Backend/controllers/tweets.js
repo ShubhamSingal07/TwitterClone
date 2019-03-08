@@ -4,7 +4,7 @@ const {
     twitterdbname,
     twitter
 } = require('./mongo')
-const tweetid=0
+const tweetid = 0
 
 const fetchTweets = async (userid) => {
     try {
@@ -25,7 +25,7 @@ const fetchTweets = async (userid) => {
 
 const addTweet = async (userid, tweet) => {
     try {
-        const client = MongoClient.connect(url)
+        const client = await MongoClient.connect(url)
         const twitterdb = client.db(twitterdbname)
         const tweets = twitterdb.collection(twitter)
         tweetid++

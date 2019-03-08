@@ -11,7 +11,7 @@ const increaseLike = async (userid, likedby, tweetid, noOfLikes) => {
         const twitterdb = client.db(twitterdbname)
         const likes = twitterdb.collection(twitter)
 
-        const likesArr = likes.updateOne(
+        const likesArr = await likes.updateOne(
             {
                 $and: [{
                     userid
@@ -36,13 +36,13 @@ const increaseLike = async (userid, likedby, tweetid, noOfLikes) => {
     }
 }
 
-const decreaseLike = (userid, dislikedby, tweetid, noOfLikes) => {
+const decreaseLike = async (userid, dislikedby, tweetid, noOfLikes) => {
     try {
         const client = await MongoClient.connect(url)
         const twitterdb = client.db(twitterdbname)
         const likes = twitterdb.collection(twitter)
 
-        const likesArr = likes.updateOne(
+        const likesArr = await likes.updateOne(
             {
                 $and: [{
                     userid
@@ -56,7 +56,7 @@ const decreaseLike = (userid, dislikedby, tweetid, noOfLikes) => {
                 tweets: {
                     likes: noOfLikes - 1,
                     $pull: {
-                        likedby:dislikedby
+                        likedby: dislikedby
                     }
                 }
             }

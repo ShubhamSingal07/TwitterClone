@@ -8,7 +8,7 @@ let userid = 0
 
 const fetchUsers = async () => {
     try {
-        const client = MongoClient.connect(url)
+        const client = await MongoClient.connect(url)
         const twitterdb = client.db(twitterdbname)
         const users = twitterdb.collection(twitter)
         const usersArr = await users.find({},

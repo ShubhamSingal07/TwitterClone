@@ -5,38 +5,39 @@ const {
     twitter
 } = require('./mongo')
 
-const follow = (userid, followingId) => {
+const follow = async (userid, followingId) => {
     try {
-        const client = MongoClient.connect(url)
+        const client = await MongoClient.connect(url)
         const twitterdb = client.db(twitterdbname)
         const following = twitterdb.collection(twitter)
 
-        following.updateOne(
+        const followers = await following.updateOne(
             { userid },
             {
                 $push: {
                     following: followingId
                 }
-            })
+            }).toArray()
+        return followers
     } catch (err) {
         throw err
     }
 }
 
-const unfollow = (userid, followingId) => {
+const unfollow = async (userid, followingId) => {
     try {
-        const client = MongoClient.connect(url)
+        const client = await MongoClient.connect(url)
         const twitterdb = client.db(twitterdbname)
         const following = twitterdb.collection(twitter)
 
-        following.updateOne(
+        const followers = await following.updateOne(
             { userid },
             {
                 $pull: {
                     following: followingId
                 }
             })
-
+        return followers
     } catch (err) {
         throw err
     }
