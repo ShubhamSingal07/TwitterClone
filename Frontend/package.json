@@ -1,9 +1,9 @@
 {
-  "name": "twitterclone",
+  "name": "react-playground",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "author": "",
-  "license": "ISC",
+  "author": "Naman Kumar <naman@outlook.in>",
+  "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --hot",
     "build": "webpack --progress --profile --colors",
@@ -11,9 +11,14 @@
     "format": "prettier --write \"app/**/*.{js,jsx,json,css,scss}\""
   },
   "dependencies": {
+    "keymirror": "^0.1.1",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
-    "reactstrap": "^7.1.0"
+    "react-loadable": "^5.5.0",
+    "react-redux": "^6.0.1",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -24,6 +29,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-polyfill": "^6.26.0",
     "clean-webpack-plugin": "^1.0.1",
     "compression-webpack-plugin": "^2.0.0",
