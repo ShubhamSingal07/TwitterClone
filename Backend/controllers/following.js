@@ -24,6 +24,21 @@ const follow = async (userid, followingId) => {
     }
 }
 
+const findFollowing = async (userid) => {
+    try {
+        const client = await MongoClient.connect(url)
+        const twitterdb = client.db(twitterdbname)
+        const following = twitterdb.collection(twitter)
+
+        const followingArr = await following.findOne({
+            userid
+        }).toArray()
+        return followingArr
+    } catch (err) {
+        throw err
+    }
+}
+
 const unfollow = async (userid, followingId) => {
     try {
         const client = await MongoClient.connect(url)
@@ -45,5 +60,6 @@ const unfollow = async (userid, followingId) => {
 
 module.exports = {
     follow,
-    unfollow
+    unfollow,
+    findFollowing,
 }

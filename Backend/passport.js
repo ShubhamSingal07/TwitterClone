@@ -1,16 +1,11 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-
-const { User } = require('./db/models')
+const { fetchUser, findUser } = require('./controllers')
 
 passport.use(new LocalStrategy(
     async (username, password, done) => {
         try {
-            const user = await User.findOne({
-                where: {
-                    username
-                }
-            })
+            const user = await fetchUser(username)[0]
 
             if (!user) {
                 return done(null, false, { message: 'Username Invalid' })
@@ -34,11 +29,7 @@ passport.serializeUser(
 
 passport.deserializeUser(
     (UserID, done) => {
-        User.findOne({
-            where: {
-                id: UserID
-            }
-        })
+        findUser(UserID)
             .then((user) => done(null, user))
             .catch(done)
     }

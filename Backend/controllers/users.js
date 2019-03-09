@@ -24,6 +24,49 @@ const fetchUsers = async () => {
     }
 }
 
+const fetchUser = async (username) => {
+    try {
+        const client = await MongoClient.connect(url)
+        const twitterdb = client.db(twitterdbname)
+        const users = twitterdb.collection(twitter)
+        const usersArr = await users.findOne({
+            username
+        },
+            {
+                username: 1,
+                password: 1
+            }
+        ).toArray()
+
+        return usersArr
+
+    } catch (err) {
+        throw err
+    }
+}
+
+const findUser = async (id) => {
+    try {
+        const client = await MongoClient.connect(url)
+        const twitterdb = client.db(twitterdbname)
+        const users = twitterdb.collection(twitter)
+        const usersArr = await users.findOne({
+            userid:id
+        },
+            {
+                username: 1,
+                password: 1
+            }
+        ).toArray()
+
+        return usersArr
+
+    } catch (err) {
+        throw err
+    }
+}
+
+
 const addUser = async (username, password) => {
     try {
         const client = await MongoClient.connect(url)
@@ -48,7 +91,9 @@ const addUser = async (username, password) => {
 
 module.exports = {
     fetchUsers,
-    addUser
+    addUser,
+    fetchUser,
+    findUser
 }
 
 

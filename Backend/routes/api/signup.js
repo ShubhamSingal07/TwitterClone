@@ -1,5 +1,5 @@
 const route = require('express').Router()
-const { User } = require('../../db/models')
+const { addUser } = require('../../controllers')
 
 route.get('/', (req, res) => [
     res.send({
@@ -10,10 +10,7 @@ route.get('/', (req, res) => [
 route.post('/', async (req, res) => {
 
     try {
-        const user = await User.create({
-            username: req.body.username,
-            password: req.body.password
-        })
+        const user = await addUser(req.body.username,req.body.password)[0]
 
         if (!user) throw new Error('Error creating User')
 
