@@ -1,14 +1,15 @@
 const route = require('express').Router()
 const { fetchUsers, fetchFollowingTweets } = require('../../../controllers')
 
-route.get('/', (req, res) => {
+route.get('/', async (req, res) => {
+
     if (req.user) {
         res.send({
             homePage: true,
-            users: fetchUsers(),
-            tweets: fetchFollowingTweets(req.user.userid)
+            users: await fetchUsers(),
+            tweets: await fetchFollowingTweets(req.user.id)
         })
-    }else{
+    } else {
         res.redirect('/api/login')
     }
 })

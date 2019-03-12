@@ -5,38 +5,40 @@ const {
     twitter
 } = require('./mongo')
 
-const increaseLike = async (userid, likedby, tweetid, noOfLikes) => {
+const increaseLike = async (userid, likedby, tweetid) => {
     try {
         const client = await MongoClient.connect(url)
         const twitterdb = client.db(twitterdbname)
         const likes = twitterdb.collection(twitter)
-
         const likesArr = await likes.updateOne(
             {
                 $and: [{
-                    userid
+                    id: userid
                 }, {
                     tweets: {
-                        tweetid
+                        $elemMatch: {
+                            tweetid
+                        }
                     }
                 }]
             },
             {
-                tweets: {
-                    likes: noOfLikes + 1,
-                    $push: {
-                        likedby
-                    }
+                $inc: {
+                    "tweets.$.likes": 1,
+                },
+                $push: {
+                    "tweets.$.likedby": likedby
                 }
             }
-        ).toArray()
+        )
+        client.close()
         return likesArr
     } catch (err) {
         throw err
     }
 }
 
-const decreaseLike = async (userid, dislikedby, tweetid, noOfLikes) => {
+const decreaseLike = async (userid, dislikedby, tweetid) => {
     try {
         const client = await MongoClient.connect(url)
         const twitterdb = client.db(twitterdbname)
@@ -45,22 +47,25 @@ const decreaseLike = async (userid, dislikedby, tweetid, noOfLikes) => {
         const likesArr = await likes.updateOne(
             {
                 $and: [{
-                    userid
+                    id: userid
                 }, {
                     tweets: {
-                        tweetid
+                        $elemMatch: {
+                            tweetid
+                        }
                     }
                 }]
             },
             {
-                tweets: {
-                    likes: noOfLikes - 1,
-                    $pull: {
-                        likedby: dislikedby
-                    }
+                $inc: {
+                    "tweets.$.likes": -1,
+                },
+                $pull: {
+                    "tweets.$.likedby": dislikedby
                 }
             }
-        ).toArray()
+        )
+        client.close()
         return likesArr
     } catch (err) {
         throw err

@@ -5,7 +5,7 @@ const { fetchUser, findUser } = require('./controllers')
 passport.use(new LocalStrategy(
     async (username, password, done) => {
         try {
-            const user = await fetchUser(username)[0]
+            const user = await fetchUser(username)
 
             if (!user) {
                 return done(null, false, { message: 'Username Invalid' })

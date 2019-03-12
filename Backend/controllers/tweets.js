@@ -1,3 +1,5 @@
+const uuidv4 = require('uuid/v4')
+
 const {
     MongoClient,
     url,
@@ -5,8 +7,7 @@ const {
     twitter
 } = require('./mongo')
 const { findFollowing } = require('./following')
-
-const tweetid = 0
+const { findUser } = require('./users')
 
 const fetchTweets = async (userid) => {
     try {
@@ -14,11 +15,11 @@ const fetchTweets = async (userid) => {
         const twitterdb = client.db(twitterdbname)
         const tweets = twitterdb.collection(twitter)
 
-        const tweetsArr = await tweets.find(
-            { userid },
-            { tweets: 1 }
-        ).toArray()
-        return tweetsArr
+        const tweetsArr = await tweets.findOne(
+            { id: userid }
+        )
+        client.close()
+        return tweetsArr.tweets
     }
     catch (err) {
         throw err
@@ -26,13 +27,17 @@ const fetchTweets = async (userid) => {
 }
 
 const fetchFollowingTweets = async (userid) => {
+   
     const tweets = await fetchTweets(userid)
-    const followingArr = findFollowing(userid)
-    let tweetsArr=[]
-    for(i=0;i<followingArr.length;i++){
-        tweetsArr=[...fetchTweets(followingArr[i],...tweetsArr)]
+    const followingArr = await findFollowing(userid)
+    
+    let tweetsArr = []
+    for (i = 0; i < followingArr.length; i++) {
+        const tweet=await fetchTweets(followingArr[i])
+        tweetsArr = [...tweet, ...tweetsArr]
     }
-return [...tweets,...tweetsArr]
+   
+    return [...tweets, ...tweetsArr]
 }
 
 const addTweet = async (userid, tweet) => {
@@ -40,21 +45,26 @@ const addTweet = async (userid, tweet) => {
         const client = await MongoClient.connect(url)
         const twitterdb = client.db(twitterdbname)
         const tweets = twitterdb.collection(twitter)
-        tweetid++
+
+        const tweetid = uuidv4()
+        const userObj = await findUser(userid)
         const tweetsArr = await tweets.updateOne(
-            { userid },
+            { id: userid },
             {
                 $push: {
                     tweets: {
                         tweetid,
+                        tweetByUserId: userid,
+                        tweetByUserName:userObj.username,
                         tweet,
                         likes: 0,
                         likedby: []
                     }
                 }
             }
-        ).toArray()
+        )
 
+        client.close()
         return tweetsArr
     } catch (err) {
         throw err

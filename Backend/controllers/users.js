@@ -4,20 +4,23 @@ const {
     twitterdbname,
     twitter
 } = require('./mongo')
-let userid = 0
+
+const uuidv4 = require('uuid/v4')
 
 const fetchUsers = async () => {
     try {
         const client = await MongoClient.connect(url)
         const twitterdb = client.db(twitterdbname)
         const users = twitterdb.collection(twitter)
-        const usersArr = await users.find({},
-            {
-                username: 1
-            }
-        ).toArray()
+        const usersArr = await users.find().toArray()
 
-        return usersArr
+        const newUsersArr = usersArr.map(({ id, username }) =>
+            ({
+                id: id,
+                username
+            }))
+        client.close()
+        return newUsersArr
 
     } catch (err) {
         throw err
@@ -29,37 +32,41 @@ const fetchUser = async (username) => {
         const client = await MongoClient.connect(url)
         const twitterdb = client.db(twitterdbname)
         const users = twitterdb.collection(twitter)
-        const usersArr = await users.findOne({
+        const userArr = await users.findOne({
             username
-        },
-            {
-                username: 1,
-                password: 1
-            }
-        ).toArray()
+        })
 
-        return usersArr
+        const userObj = {
+            id: userArr.id,
+            username: userArr.username,
+            password: userArr.password
+        }
+
+        client.close()
+        return userObj
 
     } catch (err) {
         throw err
     }
 }
 
-const findUser = async (id) => {
+const findUser = async (userid) => {
     try {
         const client = await MongoClient.connect(url)
         const twitterdb = client.db(twitterdbname)
         const users = twitterdb.collection(twitter)
-        const usersArr = await users.findOne({
-            userid:id
-        },
-            {
-                username: 1,
-                password: 1
-            }
-        ).toArray()
 
-        return usersArr
+        const userArr = await users.findOne({
+            id: userid
+        })
+
+        const userObj = {
+            id: userArr.id,
+            username: userArr.username,
+        }
+
+        client.close()
+        return userObj
 
     } catch (err) {
         throw err
@@ -72,17 +79,22 @@ const addUser = async (username, password) => {
         const client = await MongoClient.connect(url)
         const twitterdb = client.db(twitterdbname)
         const users = twitterdb.collection(twitter)
-        userid++;
+        const id = uuidv4()
 
-        const usersArr = await users.insertOne({
-            userid,
+        const userArr = (await users.insertOne({
+            id,
             username,
             password,
             tweets: [],
             following: [],
-        }).toArray()
+        })).ops[0]
 
-        return usersArr
+        const userObj = {
+            username: userArr.username,
+            id: userArr.id
+        }
+        client.close()
+        return userObj
 
     } catch (err) {
         throw err

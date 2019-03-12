@@ -10,13 +10,15 @@ route.get('/', (req, res) => [
 route.post('/', async (req, res) => {
 
     try {
-        const user = await addUser(req.body.username,req.body.password)[0]
+        const user = await addUser(req.body.username,req.body.password)
 
         if (!user) throw new Error('Error creating User')
 
-        return res.redirect('/api/login')
+        res.redirect('/api/login')
+        return user
     } catch (err) {
-        res.redirect('/api/signup')
+        res.redirect('./api/signup')
+        return err
     }
 
 })

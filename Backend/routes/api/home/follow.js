@@ -1,13 +1,17 @@
 const route = require('express').Router()
 const { follow } = require('../../../controllers')
 
-route.get('/', (req, res) => {
+route.get('/', async (req, res) => {
     try {
-        await follow(req.user.userid, req.body.followingId)
-        res.send({
-            success: true,
-            message: "Successfully followed"
-        })
+        if (req.user) {
+            await follow(req.user.id, req.body.followingId)
+            res.send({
+                success: true,
+                message: "Successfully followed"
+            })
+        } else {
+            throw new Error('cannot follow')
+        }
     } catch (err) {
         res.send({
             message: "Could not follow"

@@ -12,12 +12,13 @@ const follow = async (userid, followingId) => {
         const following = twitterdb.collection(twitter)
 
         const followers = await following.updateOne(
-            { userid },
+            { id: userid },
             {
                 $push: {
                     following: followingId
                 }
-            }).toArray()
+            })
+        client.close()
         return followers
     } catch (err) {
         throw err
@@ -31,9 +32,10 @@ const findFollowing = async (userid) => {
         const following = twitterdb.collection(twitter)
 
         const followingArr = await following.findOne({
-            userid
-        }).toArray()
-        return followingArr
+            id: userid
+        })
+        client.close()
+        return followingArr.following
     } catch (err) {
         throw err
     }
@@ -46,12 +48,13 @@ const unfollow = async (userid, followingId) => {
         const following = twitterdb.collection(twitter)
 
         const followers = await following.updateOne(
-            { userid },
+            { id:userid },
             {
                 $pull: {
                     following: followingId
                 }
             })
+        client.close()
         return followers
     } catch (err) {
         throw err
