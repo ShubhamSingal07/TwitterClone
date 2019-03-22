@@ -36,10 +36,14 @@ const fetchUser = async (username) => {
             username
         })
 
+        if (!userArr) {
+            throw new Error('Invalid username or password')
+        }
+
         const userObj = {
             id: userArr.id,
             username: userArr.username,
-            password: userArr.password
+            password: userArr.password,
         }
 
         client.close()

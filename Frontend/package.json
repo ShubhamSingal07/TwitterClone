@@ -1,9 +1,9 @@
 {
-  "name": "react-playground",
+  "name": "twitter_clone",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "author": "Naman Kumar <naman@outlook.in>",
-  "license": "MIT",
+  "author": "Shubham Singal",
+  "license": "ISC",
   "scripts": {
     "start": "webpack-dev-server --hot",
     "build": "webpack --progress --profile --colors",

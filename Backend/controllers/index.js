@@ -1,7 +1,7 @@
 const { increaseLike, decreaseLike } = require('./Likes')
 const { fetchTweets, addTweet, fetchFollowingTweets } = require('./tweets')
 const { fetchUsers, addUser, fetchUser, findUser } = require('./users')
-const { follow, unfollow } = require('./following')
+const { follow, unfollow, findFollowing } = require('./following')
 
 module.exports = {
     increaseLike,
@@ -15,4 +15,5 @@ module.exports = {
     findUser,
     fetchUser,
     fetchFollowingTweets,
+    findFollowing,
 }

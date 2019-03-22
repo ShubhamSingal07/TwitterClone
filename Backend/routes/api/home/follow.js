@@ -5,10 +5,11 @@ route.get('/', async (req, res) => {
     try {
         if (req.user) {
             await follow(req.user.id, req.body.followingId)
-            res.send({
-                success: true,
-                message: "Successfully followed"
-            })
+            // res.send({
+            //     success: true,
+            //     message: "Successfully followed"
+            // })
+            res.redirect('/api/tweets')
         } else {
             throw new Error('cannot follow')
         }

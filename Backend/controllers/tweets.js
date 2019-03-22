@@ -6,7 +6,6 @@ const {
     twitterdbname,
     twitter
 } = require('./mongo')
-const { findFollowing } = require('./following')
 const { findUser } = require('./users')
 
 const fetchTweets = async (userid) => {
@@ -26,10 +25,9 @@ const fetchTweets = async (userid) => {
     }
 }
 
-const fetchFollowingTweets = async (userid) => {
+const fetchFollowingTweets = async (userid,followingArr) => {
    
     const tweets = await fetchTweets(userid)
-    const followingArr = await findFollowing(userid)
     
     let tweetsArr = []
     for (i = 0; i < followingArr.length; i++) {

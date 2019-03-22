@@ -1,0 +1,28 @@
+import keymirror from 'keymirror';
+
+export default keymirror({
+  loginInProgress: null,
+  loginSuccess: null,
+  loginFail: null,
+  SignupInProgress: null,
+  SignupSuccess: null,
+  SignupFail: null,
+  homepageSuccess: null,
+  homepageFail: null,
+  homepageInProgress: null,
+  logoutSuccess: null,
+  logoutInProgress: null,
+  logoutFail: null,
+  followSuccess: null,
+  followInProgress: null,
+  followFail: null,
+  likeSuccess: null,
+  likeInProgress: null,
+  likeFail: null,
+  dislikeSuccess: null,
+  dislikeInProgress: null,
+  dislikeFail: null,
+  addTweetSuccess: null,
+  addTweetInProgress: null,
+  addTweetFail: null,
+});
