@@ -1,4 +1,5 @@
 import Actions from '../store/actions';
+import { logout } from './';
 
 const unfollowInProgress = () => ({
   type: Actions.unfollowInProgress,
@@ -18,16 +19,21 @@ export const unfollow = id => async dispatch => {
   await dispatch(unfollowInProgress());
   try {
     const res = await fetch('http://localhost:5000/api/unfollow', {
-      body: {
-        followingId: id,
+      method: 'POST',
+      headers: {
+        Authorization: `Token ${localStorage.jwt}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
+      body: `followingId=${id}`,
     });
-    dispatch(
-      unfollowSuccess({
-        followingId: id,
-        tweets: res.tweets,
-      }),
-    );
+    const data = await res.json();
+    if (data.success)
+      dispatch(
+        unfollowSuccess({
+          userid: id,
+        }),
+      );
+    else if (data.userNotPresent) dispatch(logout());
   } catch (err) {
     dispatch(
       unfollowFail({

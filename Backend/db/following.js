@@ -4,6 +4,7 @@ const {
     twitterdbname,
     twitter
 } = require('./mongo')
+const { fetchTweets } = require('./tweets')
 
 const follow = async (userid, followingId) => {
     try {
@@ -19,7 +20,8 @@ const follow = async (userid, followingId) => {
                 }
             })
         client.close()
-        return followers
+        const tweets=fetchTweets(followingId)
+        return tweets
     } catch (err) {
         throw err
     }
@@ -48,7 +50,7 @@ const unfollow = async (userid, followingId) => {
         const following = twitterdb.collection(twitter)
 
         const followers = await following.updateOne(
-            { id:userid },
+            { id: userid },
             {
                 $pull: {
                     following: followingId

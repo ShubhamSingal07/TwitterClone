@@ -1,4 +1,5 @@
 import Actions from '../store/actions';
+import { logout } from './';
 
 const followInProgress = () => ({
   type: Actions.followInProgress,
@@ -18,15 +19,23 @@ export const follow = id => async dispatch => {
   await dispatch(followInProgress());
   try {
     const res = await fetch('http://localhost:5000/api/follow', {
-      body: {
-        followingId: id,
+      method: 'POST',
+      headers: {
+        Authorization: `Token ${localStorage.jwt}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
+      body: `followingId=${id}`,
     });
-    dispatch(
-      followSuccess({
-        tweets: res.tweets,
-      }),
-    );
+
+    const data = await res.json();
+    if (data.success)
+      dispatch(
+        followSuccess({
+          tweets: data.tweets,
+          userid: id,
+        }),
+      );
+    else if (data.userNotPresent) dispatch(logout());
   } catch (err) {
     dispatch(
       followFail({

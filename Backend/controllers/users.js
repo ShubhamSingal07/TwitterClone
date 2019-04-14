@@ -1,116 +1,33 @@
-const {
-    MongoClient,
-    url,
-    twitterdbname,
-    twitter
-} = require('./mongo')
+const { addUser, fetchUser } = require('../db')
+const { createJWT } = require('../utils/jwt')
 
-const uuidv4 = require('uuid/v4')
-
-const fetchUsers = async () => {
+const verifyUser = async (username,password) => {
     try {
-        const client = await MongoClient.connect(url)
-        const twitterdb = client.db(twitterdbname)
-        const users = twitterdb.collection(twitter)
-        const usersArr = await users.find().toArray()
-
-        const newUsersArr = usersArr.map(({ id, username }) =>
-            ({
-                id: id,
-                username
-            }))
-        client.close()
-        return newUsersArr
-
+        const userObj = await fetchUser(username)
+        if (!userObj) {
+            throw new Error('User could not be found with given username')
+        }
+        if (userObj.password !== password) {
+            throw new Error('Password Invalid')
+        }
+        delete userObj.password
+        return userObj
     } catch (err) {
-        throw err
+        throw new Error('could not connect to database')
     }
 }
 
-const fetchUser = async (username) => {
-    try {
-        const client = await MongoClient.connect(url)
-        const twitterdb = client.db(twitterdbname)
-        const users = twitterdb.collection(twitter)
-        const userArr = await users.findOne({
-            username
-        })
-
-        if (!userArr) {
-            throw new Error('Invalid username or password')
-        }
-
-        const userObj = {
-            id: userArr.id,
-            username: userArr.username,
-            password: userArr.password,
-        }
-
-        client.close()
-        return userObj
-
-    } catch (err) {
-        throw err
-    }
-}
-
-const findUser = async (userid) => {
-    try {
-        const client = await MongoClient.connect(url)
-        const twitterdb = client.db(twitterdbname)
-        const users = twitterdb.collection(twitter)
-
-        const userArr = await users.findOne({
-            id: userid
-        })
-
-        const userObj = {
-            id: userArr.id,
-            username: userArr.username,
-        }
-
-        client.close()
-        return userObj
-
-    } catch (err) {
-        throw err
-    }
-}
-
-
-const addUser = async (username, password) => {
-    try {
-        const client = await MongoClient.connect(url)
-        const twitterdb = client.db(twitterdbname)
-        const users = twitterdb.collection(twitter)
-        const id = uuidv4()
-
-        const userArr = (await users.insertOne({
-            id,
-            username,
-            password,
-            tweets: [],
-            following: [],
-        })).ops[0]
-
-        const userObj = {
-            username: userArr.username,
-            id: userArr.id
-        }
-        client.close()
-        return userObj
-
-    } catch (err) {
-        throw err
+const createUser = async (username, password) => {
+    const user = await addUser(username, password)
+    if (!user) throw new Error('Error creating User')
+    else {
+        const token = createJWT(user)
+        user.token = token
+        return user
     }
 }
 
 module.exports = {
-    fetchUsers,
-    addUser,
-    fetchUser,
-    findUser
+    verifyUser,
+    createUser
 }
-
-
-

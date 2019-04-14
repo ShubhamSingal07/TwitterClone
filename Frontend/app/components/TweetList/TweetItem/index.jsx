@@ -2,28 +2,36 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as Actions from '../../../actions';
+import './style.scss';
 
 class TweetItem extends React.PureComponent {
   state = {
     isLiked: false,
   };
 
-  getDerivedStateFromProps() {
-    const { user, tweetItem } = this.props;
-    this.setState({
+  static getDerivedStateFromProps(props, state) {
+    const { user, tweetItem } = props;
+    return {
+      ...state,
       isLiked: tweetItem.likedby.includes(user.id),
-    });
+    };
   }
 
   render() {
-    const { tweetItem, like, dislike } = this.props;
+    const { tweetItem, like, dislike, user } = this.props;
     const { isLiked } = this.state;
 
     const handleLike = () => {
       if (isLiked) {
-        dislike(tweetItem.tweetByUserId, tweetItem.tweetid);
+        dislike({
+          tweetItem,
+          userid: user.id,
+        });
       } else {
-        like(tweetItem.tweetByUserId, tweetItem.tweetid);
+        like({
+          tweetItem,
+          userid: user.id,
+        });
       }
       this.setState({
         isLiked: !isLiked,
@@ -31,12 +39,18 @@ class TweetItem extends React.PureComponent {
     };
 
     return (
-      <div>
-        <div>{tweetItem.tweetByUserName}</div>
-        <div>{tweetItem.tweet}</div>
-        <div>
-          <button onClick={handleLike}>{isLiked ? '❤️' : '♡'}</button>
-          <span>{tweetItem.likes}</span>
+      <div className="tweetItem">
+        <div className="p-3">
+          <div>
+            <b>{tweetItem.tweetByUserName}</b>
+            <div>{tweetItem.tweet}</div>
+          </div>
+          <div>
+            <button className="btn" onClick={handleLike}>
+              {isLiked ? '❤️' : '🖤'}
+            </button>
+            <span>{tweetItem.likes}</span>
+          </div>
         </div>
       </div>
     );

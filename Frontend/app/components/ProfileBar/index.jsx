@@ -1,15 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const ProfileBar = React.memo(({ user }) => (
-  <div className="profileBar">
-    <h1>{user.username}</h1>
-    <h3>@{user.username}</h3>
+import './style.scss';
+
+const ProfileBar = React.memo(({ username }) => (
+  <div className="profileBar m-1 mt-2 p-3">
+    <div>
+      <h1>{username}</h1>
+      <h5>@{username}</h5>
+    </div>
   </div>
 ));
 
-const mapStateToProps = user => ({
-  user,
+const mapStateToProps = ({ user }) => ({
+  username: user.data,
 });
 
 export default connect(mapStateToProps)(ProfileBar);

@@ -1,4 +1,5 @@
 import Actions from '../store/actions';
+import { logout } from './';
 
 const likeSuccess = payload => ({
   type: Actions.likeSuccess,
@@ -13,17 +14,21 @@ const likeFail = () => ({
   type: Actions.likeFail,
 });
 
-export const like = ({ tweetByUserId, tweetid }) => async dispatch => {
+export const like = ({ tweetItem, userid }) => async dispatch => {
+  const { tweetByUserId, tweetid } = tweetItem;
   await dispatch(likeInProgress());
   try {
     const res = await fetch('http://localhost:5000/api/like', {
-      body: {
-        tweetByUserId: tweetByUserId,
-        tweetid: tweetid,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Token ${localStorage.jwt}`,
       },
+      body: `tweetByUserId=${tweetByUserId}&tweetid=${tweetid}`,
     });
-
-    dispatch(likeSuccess(res.tweets));
+    const data = await res.json();
+    if (data.success) dispatch(likeSuccess({ tweetid, userid }));
+    else if (data.userNotPresent) dispatch(logout());
   } catch (err) {
     dispatch(
       likeFail({

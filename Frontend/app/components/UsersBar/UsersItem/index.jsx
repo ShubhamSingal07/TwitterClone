@@ -1,17 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import * as Actions from '../../../actions';
+import './style.scss';
 
 class UsersItem extends React.PureComponent {
   state = {
     isFollowing: [],
   };
 
-  getDerivedStateFromProps() {
-    const { following, id } = this.props;
-    this.setState({
+  static getDerivedStateFromProps(props, state) {
+    const { following, id } = props;
+    return {
+      ...state,
       isFollowing: following.includes(id),
-    });
+    };
   }
 
   render() {
@@ -30,16 +33,18 @@ class UsersItem extends React.PureComponent {
     };
 
     return (
-      <div>
+      <div className="usersItem p-1">
         <div>{username}</div>
-        <button onClick={handleFollowing}>{isFollowing ? 'Unfollow' : 'Follow'}</button>
+        <button className="btn btn-outline-primary rounded-pill btn-sm" onClick={handleFollowing}>
+          {isFollowing ? 'Unfollow' : 'Follow'}
+        </button>
       </div>
     );
   }
 }
 
 const mapStateToProps = ({ following }) => ({
-  following,
+  following: following.data,
 });
 
 const mapDispatchToProps = dispatch => ({

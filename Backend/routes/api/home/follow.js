@@ -1,15 +1,16 @@
 const route = require('express').Router()
-const { follow } = require('../../../controllers')
 
-route.get('/', async (req, res) => {
+const { follow } = require('../../../db')
+const { userAuthViaToken } = require('../../auth')
+
+route.post('/', userAuthViaToken, async (req, res) => {
     try {
         if (req.user) {
-            await follow(req.user.id, req.body.followingId)
-            // res.send({
-            //     success: true,
-            //     message: "Successfully followed"
-            // })
-            res.redirect('/api/tweets')
+            const tweets = await follow(req.user.id, req.body.followingId)
+            res.send({
+                success: true,
+                tweets
+            })
         } else {
             throw new Error('cannot follow')
         }

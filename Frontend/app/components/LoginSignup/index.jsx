@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Loader from '../Loader';
 import * as Actions from '../../actions';
 
 class LoginSignup extends React.PureComponent {
@@ -19,21 +18,48 @@ class LoginSignup extends React.PureComponent {
 
   render() {
     const { username, password, passwordAgain } = this.state;
-    const { isLoginPage, login, signup, errors, loggingIn, signingUp } = this.props;
+    const { isLoginPage, login, signup, errors, inProgress } = this.props;
 
     const handleLogin = () => login({ username, password });
     const handleSignup = () => signup({ username, password, passwordAgain });
 
     return (
       <div>
-        <input type="text" name="username" value={username} placeholder="Username" onChange={this.handleValueChange} />
-        <input type="password" name="password" value={password} placeholder="Password" />
-        {isLoginPage ? null : (
-          <input type="password" name="passwordAgain" value={passwordAgain} placeholder="Password" />
-        )}
-        {errors && <p>{errors}</p>}
-        <button onClick={isLoginPage ? handleLogin : handleSignup}>
-          {isLoginPage ? { loggingIn } ? <Loader /> : 'Login' : { signingUp } ? <Loader /> : 'Signin'}
+        <div className="input-group input-group-sm mb-3">
+          <input
+            className="form-control"
+            type="text"
+            name="username"
+            value={username}
+            placeholder="Username"
+            onChange={this.handleValueChange}
+          />
+        </div>
+        <div className="input-group input-group-sm mb-3">
+          <input
+            className="form-control"
+            type="password"
+            name="password"
+            value={password}
+            placeholder="Password"
+            onChange={this.handleValueChange}
+          />
+        </div>
+        <div className="input-group input-group-sm mb-3">
+          {isLoginPage ? null : (
+            <input
+              className="form-control"
+              type="password"
+              name="passwordAgain"
+              value={passwordAgain}
+              placeholder="Enter Password Again"
+              onChange={this.handleValueChange}
+            />
+          )}
+        </div>
+        {errors && <p className="alert alert-danger">{errors}</p>}
+        <button className="btn btn-primary rounded-pill mb-3" onClick={isLoginPage ? handleLogin : handleSignup}>
+          {isLoginPage ? 'Log In' : 'Sign Up'}
         </button>
       </div>
     );
@@ -41,8 +67,7 @@ class LoginSignup extends React.PureComponent {
 }
 
 const mapStateToProps = ({ auth }) => ({
-  loggingIn: auth.loggingIn,
-  signingUp: auth.signingUp,
+  inProgress: auth.inProgress,
   errors: auth.errors,
 });
 
@@ -52,6 +77,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-  mapDispatchToProps,
   mapStateToProps,
+  mapDispatchToProps,
 )(LoginSignup);

@@ -16,22 +16,40 @@ const loginFail = payload => ({
 
 export const login = ({ username, password }) => async dispatch => {
   await dispatch(loginInProgress());
-
+  if (username.trim() == '' || password.trim() == '') {
+    return dispatch(
+      loginFail({
+        errors: 'Fields cannot be empty',
+      }),
+    );
+  }
   try {
     const res = await fetch('http://localhost:5000/api/login', {
       method: 'POST',
-      body: {
-        username: username,
-        password: password,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
+      body: `username=${username}&password=${password}`,
     });
 
-    if (res.homepage) {
-      dispatch(loginSuccess(res.user));
-      return user;
-    } else throw new Error('Invalid username or password');
+    const data = await res.json();
+
+    if (data.success) {
+      dispatch(loginSuccess(data.user));
+      return data.user;
+    } else {
+      dispatch(
+        loginFail({
+          errors: data.error,
+        }),
+      );
+    }
   } catch (err) {
-    dispatch(loginFail(errors));
+    dispatch(
+      loginFail({
+        errors: 'Could not connect to server',
+      }),
+    );
     return err;
   }
 };

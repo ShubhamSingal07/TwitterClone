@@ -6,7 +6,6 @@ const {
     twitterdbname,
     twitter
 } = require('./mongo')
-const { findUser } = require('./users')
 
 const fetchTweets = async (userid) => {
     try {
@@ -25,49 +24,51 @@ const fetchTweets = async (userid) => {
     }
 }
 
-const fetchFollowingTweets = async (userid,followingArr) => {
-   
+const fetchFollowingTweets = async (userid, followingArr) => {
+
     const tweets = await fetchTweets(userid)
-    
+
     let tweetsArr = []
     for (i = 0; i < followingArr.length; i++) {
-        const tweet=await fetchTweets(followingArr[i])
+        const tweet = await fetchTweets(followingArr[i])
         tweetsArr = [...tweet, ...tweetsArr]
     }
-   
+
     return [...tweets, ...tweetsArr]
 }
 
-const addTweet = async (userid, tweet) => {
+const addTweet = async (userid, tweet,username) => {
     try {
         const client = await MongoClient.connect(url)
         const twitterdb = client.db(twitterdbname)
         const tweets = twitterdb.collection(twitter)
 
         const tweetid = uuidv4()
-        const userObj = await findUser(userid)
-        const tweetsArr = await tweets.updateOne(
+        let value={
+            tweetid,
+            tweetByUserId: userid,
+            tweetByUserName: username,
+            tweet,
+            likes: 0,
+            likedby: []
+        }
+        await tweets.updateOne(
             { id: userid },
             {
                 $push: {
                     tweets: {
-                        tweetid,
-                        tweetByUserId: userid,
-                        tweetByUserName:userObj.username,
-                        tweet,
-                        likes: 0,
-                        likedby: []
+                        $each: [value],
+                        $position:0
                     }
                 }
             }
         )
-
+        
         client.close()
-        return tweetsArr
+        return value
     } catch (err) {
         throw err
     }
-
 }
 
 module.exports = {

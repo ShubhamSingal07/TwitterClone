@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 import { HomePage, LoginPage, SignupPage } from './containers';
+import { EntryController } from './controllers';
+import { Footer } from './components';
 
 import './styles/main.scss';
 
@@ -13,10 +15,19 @@ class App extends React.PureComponent {
     return (
       <Provider store={store}>
         <Router>
-          <Route path="/login" exact Component={LoginPage} />
-          <Route path="/signup" exact Component={SignupPage} />
-          <Route path="/" exact Component={HomePage} />
+          <Switch>
+            <Route path="/login" exact component={LoginPage} />
+            <Route path="/signup" exact component={SignupPage} />
+            <Route
+              render={() => (
+                <EntryController>
+                  <Route path="/" exact component={HomePage} />
+                </EntryController>
+              )}
+            />
+          </Switch>
         </Router>
+        <Footer />
       </Provider>
     );
   }

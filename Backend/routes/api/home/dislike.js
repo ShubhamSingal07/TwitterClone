@@ -1,9 +1,11 @@
 const route = require('express').Router()
-const { decreaseLike } = require('../../../controllers/Likes')
 
-route.get('/', async (req, res) => {
+const { decreaseLike } = require('../../../db')
+const { userAuthViaToken } = require('../../auth')
+
+route.post('/', userAuthViaToken, async (req, res) => {
     try {
-        await decreaseLike(req.body.tweetByUserid, req.user.id, req.body.tweetid)
+        await decreaseLike(req.body.tweetByUserId, req.user.id, req.body.tweetid)
         res.send({
             success: true,
             message: "tweet disliked"

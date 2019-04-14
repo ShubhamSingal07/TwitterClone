@@ -1,10 +1,11 @@
 const route = require('express').Router()
-const { increaseLike } = require('../../../controllers/Likes')
 
-route.get('/', async (req, res) => {
-    console.log('in like get request')
+const { increaseLike } = require('../../../db')
+const { userAuthViaToken } = require('../../auth')
+
+route.post('/', userAuthViaToken, async (req, res) => {
     try {
-        await increaseLike(req.body.tweetByUserid, req.user.id, req.body.tweetid)
+        await increaseLike(req.body.tweetByUserId, req.user.id, req.body.tweetid)
         res.send({
             success: true,
             message: "tweet liked"

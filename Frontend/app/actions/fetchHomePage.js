@@ -21,19 +21,27 @@ const loginFail = payload => ({
 export const fetchHomePage = () => async dispatch => {
   try {
     await dispatch(homepageInProgress());
-    const res = await fetch('http://localhost:5000/api/login', {
+    const res = await fetch('http://localhost:5000/api/home', {
       method: 'POST',
+      headers: {
+        Authorization: `Token ${localStorage.jwt}`,
+      },
     });
-    if (!res.loginPage) {
+    const data = await res.json();
+    if (data.success) {
       dispatch(
         homepageSuccess({
-          users: res.users,
-          tweets: res.tweets,
-          following: res.tweets,
+          users: data.users,
+          tweets: data.tweets,
+          following: data.following,
         }),
       );
     } else {
-      dispatch(loginFail('Session timed out'));
+      dispatch(
+        loginFail({
+          error: 'Session timed out',
+        }),
+      );
     }
   } catch (err) {
     dispatch(homepageFail());

@@ -1,0 +1,9 @@
+#loader_img {
+  transform: translate(60%, 120%);
+  animation: incDec 2s infinite;
+}
+@keyframes incDec {
+  50% {
+    transform: scale(2, 2) translate(20%, 70%) rotateZ(4deg);
+  }
+}

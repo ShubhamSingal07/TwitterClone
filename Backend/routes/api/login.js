@@ -1,5 +1,7 @@
 const route = require('express').Router()
-const passport = require('../../passport')
+
+const { verifyUser } = require('../../controllers/users')
+const { createJWT } = require('../../utils/jwt')
 
 route.get('/', (req, res) => {
     res.send({
@@ -7,9 +9,20 @@ route.get('/', (req, res) => {
     })
 })
 
-route.post('/', passport.authenticate('local', {
-    failureRedirect: '/api/login',
-    successRedirect: '/api/home'
-}))
+route.post('/', async (req, res) => {
+    try {
+        const verifiedUser = await verifyUser(req.body.username, req.body.password)
+        const token = createJWT(verifiedUser)
+        verifiedUser.token = token
+        res.send({
+            success:true,
+            user: verifiedUser
+        })
+    } catch (err) {
+        res.send({
+            error: 'Invalid username or password'
+        })
+    }
+})
 
 module.exports = route
