@@ -9,8 +9,6 @@ but it does have some basic features listed below
 
 <img src="Frontend/public/images/demo.png" alt="Twitter Clone Demo"/>
 
-<video preload="auto" src="Frontend\public\video\DemoVideo.mp4" controls autoplay></video>
-
 ---
 
 ## Backend 
