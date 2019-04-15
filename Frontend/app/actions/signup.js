@@ -33,20 +33,22 @@ export const signup = ({ username, password, passwordAgain }) => async dispatch 
         body: `username=${username}&password=${password}`,
       });
       const data = await res.json();
-      console.log(data);
       if (data.success) {
-        console.log('signup success');
         dispatch(SignupSuccess(data.user));
-        console.log('after dispatch signup success');
+      } else if (data.exist) {
+        dispatch(
+          SignupFail({
+            errors: data.errors,
+          }),
+        );
       } else {
         return dispatch(
           SignupFail({
-            error: 'Could not connect to Server . Please try again later',
+            errors: 'Could not connect to Server . Please try again later',
           }),
         );
       }
     } else {
-      console.log('passwords does not match');
       return dispatch(
         SignupFail({
           errors: 'Passwords does not match',

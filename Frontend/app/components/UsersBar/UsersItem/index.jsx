@@ -35,9 +35,16 @@ class UsersItem extends React.PureComponent {
     return (
       <div className="usersItem p-1">
         <div>{username}</div>
-        <button className="btn btn-outline-primary rounded-pill btn-sm" onClick={handleFollowing}>
-          {isFollowing ? 'Unfollow' : 'Follow'}
-        </button>
+
+        {isFollowing ? (
+          <button className="btn btn-outline-danger rounded-pill btn-sm" onClick={handleFollowing}>
+            Unfollow
+          </button>
+        ) : (
+          <button className="btn btn-outline-primary rounded-pill btn-sm" onClick={handleFollowing}>
+            Follow
+          </button>
+        )}
       </div>
     );
   }

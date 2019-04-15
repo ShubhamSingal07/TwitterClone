@@ -8,11 +8,19 @@ route.get('/', (req, res) => {
 })
 
 route.post('/', async (req, res) => {
-    const user=await createUser(req.body.username,req.body.password)
-    res.send({
-        success:true,
-        user
-    })
+    try {
+        const user = await createUser(req.body.username, req.body.password)
+        res.send({
+            success: true,
+            user
+        })
+    }
+    catch (err) {
+        res.send({
+            exist:true,
+            errors: 'Username already exists'
+        })
+    }
 })
 
 module.exports = route

@@ -35,9 +35,8 @@ const fetchUser = async (username) => {
         const userArr = await users.findOne({
             username
         })
-
         if (!userArr) {
-            throw new Error('Invalid username or password')
+            return null
         }
 
         const userObj = {
@@ -50,7 +49,7 @@ const fetchUser = async (username) => {
         return userObj
 
     } catch (err) {
-        throw err
+        return err
     }
 }
 
@@ -80,26 +79,32 @@ const findUser = async (userid) => {
 
 const addUser = async (username, password) => {
     try {
-        const client = await MongoClient.connect(url)
-        const twitterdb = client.db(twitterdbname)
-        const users = twitterdb.collection(twitter)
-        const id = uuidv4()
 
-        const userArr = (await users.insertOne({
-            id,
-            username,
-            password,
-            tweets: [],
-            following: [],
-        })).ops[0]
+        const user = await fetchUser(username)
+        if (!user) {
+            const client = await MongoClient.connect(url)
+            const twitterdb = client.db(twitterdbname)
+            const users = twitterdb.collection(twitter)
+            const id = uuidv4()
 
-        const userObj = {
-            username: userArr.username,
-            id: userArr.id
+            const userArr = (await users.insertOne({
+                id,
+                username,
+                password,
+                tweets: [],
+                following: [],
+            })).ops[0]
+
+            const userObj = {
+                username: userArr.username,
+                id: userArr.id
+            }
+            client.close()
+            return userObj
+
+        } else {
+            throw new Error('Username already exists')
         }
-        client.close()
-        return userObj
-
     } catch (err) {
         throw err
     }
