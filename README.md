@@ -9,6 +9,9 @@ but it does have some basic features listed below
 
 <img src="Frontend/public/images/demo.png" alt="Twitter Clone Demo"/>
 
+### Demo
+Demo of the project is present at https://drive.google.com/open?id=1-YdfbV5H4i_l5SH1jthHSr2oV7Iju6ME
+
 ---
 
 ## Backend 
