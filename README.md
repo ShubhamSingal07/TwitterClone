@@ -42,6 +42,38 @@ npm install
 npm start
 ```
 
+
+## Project Structure
+    .
+    ├── Backend                     # backend
+    │   ├── controllers              
+    |   ├── db                      # database files
+    |   ├── routes  
+    |   |   ├── api                 # rest api              
+    |   |   |   ├── home                
+    |   |   |   |   └── ...    
+    │   |   |   ├── index.js       
+    │   |   |   ├── login.js       
+    │   |   |   └── signup.js       
+    |   |   └── auth.js             # verify jwt middleware
+    |   ├── utils                   
+    |   |   └── jwt.js              # create and verify jwt
+    │   └── server.js               # entry point
+    ├── Frontend                          
+    |   ├── app                                    
+    |   |   ├── actions  
+    |   |   ├── components                
+    |   |   ├── containers          # contains business logic
+    |   |   ├── controllers         
+    |   |   ├── store               # redux store
+    |   |   ├── styles
+    |   |   ├── index.html
+    |   |   ├── index.jsx           # entry point
+    |   |   ├── public              
+    |   |   └── ...
+    └── ...
+
+
 # App Info
 ### Author 
 Shubham Singal
