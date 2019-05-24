@@ -19,7 +19,6 @@ route.post('/', userAuthViaToken, async (req, res) => {
 })
 
 route.get('/', userAuthViaToken, (req, res) => { 
-    const user=req.user 
     res.send({
         success: true,
         user:req.user
