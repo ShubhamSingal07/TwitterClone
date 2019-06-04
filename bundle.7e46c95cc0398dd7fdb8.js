@@ -153,7 +153,7 @@ var addTweet = function addTweet(tweet) {
               case 4:
                 _context.prev = 4;
                 _context.next = 7;
-                return fetch('http://localhost:5000/api/tweets', {
+                return fetch("".concat(___WEBPACK_IMPORTED_MODULE_1__["url"], "/api/tweets"), {
                   method: 'POST',
                   headers: {
                     Authorization: "Token ".concat(localStorage.jwt),
@@ -256,7 +256,7 @@ var dislike = function dislike(_ref) {
               case 3:
                 _context.prev = 3;
                 _context.next = 6;
-                return fetch('http://localhost:5000/api/dislike', {
+                return fetch("".concat(___WEBPACK_IMPORTED_MODULE_1__["url"], "/api/dislike"), {
                   method: 'POST',
                   headers: {
                     Authorization: "Token ".concat(window.localStorage.jwt),
@@ -314,9 +314,11 @@ var dislike = function dislike(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchHomePage", function() { return fetchHomePage; });
 /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store/actions */ "./app/store/actions/index.js");
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ */ "./app/actions/index.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -364,7 +366,7 @@ var fetchHomePage = function fetchHomePage() {
 
               case 3:
                 _context.next = 5;
-                return fetch('http://localhost:5000/api/home', {
+                return fetch("".concat(___WEBPACK_IMPORTED_MODULE_1__["url"], "/api/home"), {
                   method: 'POST',
                   headers: {
                     Authorization: "Token ".concat(localStorage.jwt)
@@ -473,7 +475,7 @@ var follow = function follow(id) {
               case 2:
                 _context.prev = 2;
                 _context.next = 5;
-                return fetch('http://localhost:5000/api/follow', {
+                return fetch("".concat(___WEBPACK_IMPORTED_MODULE_1__["url"], "/api/follow"), {
                   method: 'POST',
                   headers: {
                     Authorization: "Token ".concat(localStorage.jwt),
@@ -524,7 +526,7 @@ var follow = function follow(id) {
 /*!******************************!*\
   !*** ./app/actions/index.js ***!
   \******************************/
-/*! exports provided: login, signup, fetchHomePage, logout, follow, unfollow, like, dislike, addTweet, refresh */
+/*! exports provided: login, signup, fetchHomePage, logout, follow, unfollow, like, dislike, addTweet, refresh, url */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -558,6 +560,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony import */ var _refresh__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./refresh */ "./app/actions/refresh.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "refresh", function() { return _refresh__WEBPACK_IMPORTED_MODULE_9__["refresh"]; });
+
+/* harmony import */ var _url__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./url */ "./app/actions/url.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "url", function() { return _url__WEBPACK_IMPORTED_MODULE_10__["url"]; });
+
 
 
 
@@ -631,7 +637,7 @@ var like = function like(_ref) {
               case 3:
                 _context.prev = 3;
                 _context.next = 6;
-                return fetch('http://localhost:5000/api/like', {
+                return fetch("".concat(___WEBPACK_IMPORTED_MODULE_1__["url"], "/api/like"), {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -689,9 +695,11 @@ var like = function like(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "login", function() { return login; });
 /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store/actions */ "./app/store/actions/index.js");
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ */ "./app/actions/index.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -745,7 +753,7 @@ var login = function login(_ref) {
               case 4:
                 _context.prev = 4;
                 _context.next = 7;
-                return fetch('http://localhost:5000/api/login', {
+                return fetch("".concat(___WEBPACK_IMPORTED_MODULE_1__["url"], "/api/login"), {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -834,9 +842,11 @@ var logout = function logout() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "refresh", function() { return refresh; });
 /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store/actions */ "./app/store/actions/index.js");
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ */ "./app/actions/index.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -878,7 +888,7 @@ var refresh = function refresh() {
               case 2:
                 _context.prev = 2;
                 _context.next = 5;
-                return fetch('http://localhost:5000/api/home', {
+                return fetch("".concat(___WEBPACK_IMPORTED_MODULE_1__["url"], "/api/home"), {
                   headers: {
                     Authorization: "Token ".concat(localStorage.jwt)
                   }
@@ -944,9 +954,11 @@ var refresh = function refresh() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signup", function() { return signup; });
 /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store/actions */ "./app/store/actions/index.js");
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ */ "./app/actions/index.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -1007,7 +1019,7 @@ var signup = function signup(_ref) {
                 }
 
                 _context.next = 8;
-                return fetch('http://localhost:5000/api/signup', {
+                return fetch("".concat(___WEBPACK_IMPORTED_MODULE_1__["url"], "/api/signup"), {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -1144,7 +1156,7 @@ var unfollow = function unfollow(id) {
               case 2:
                 _context.prev = 2;
                 _context.next = 5;
-                return fetch('http://localhost:5000/api/unfollow', {
+                return fetch("".concat(___WEBPACK_IMPORTED_MODULE_1__["url"], "/api/unfollow"), {
                   method: 'POST',
                   headers: {
                     Authorization: "Token ".concat(localStorage.jwt),
@@ -1187,6 +1199,20 @@ var unfollow = function unfollow(id) {
     }()
   );
 };
+
+/***/ }),
+
+/***/ "./app/actions/url.js":
+/*!****************************!*\
+  !*** ./app/actions/url.js ***!
+  \****************************/
+/*! exports provided: url */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "url", function() { return url; });
+var url = "https://t-w-i-t-t-e-r-backend.herokuapp.com";
 
 /***/ }),
 
@@ -45575,4 +45601,4 @@ module.exports = __webpack_require__(/*! G:\Webd\Projects\TwitterClone\Frontend\
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.32969f99b5fb6eb8850f.js.map
+//# sourceMappingURL=bundle.7e46c95cc0398dd7fdb8.js.map
