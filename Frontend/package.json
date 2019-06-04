@@ -8,9 +8,11 @@
     "start": "webpack-dev-server --hot",
     "build": "webpack --progress --profile --colors",
     "precommit": "lint-staged",
+    "deploy": "gh-pages -d dist",
     "format": "prettier --write \"app/**/*.{js,jsx,json,css,scss}\""
   },
   "dependencies": {
+    "gh-pages": "^2.0.1",
     "keymirror": "^0.1.1",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",

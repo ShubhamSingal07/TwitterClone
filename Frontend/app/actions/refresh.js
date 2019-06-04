@@ -1,4 +1,5 @@
 import Actions from '../store/actions';
+import { url } from './';
 
 const refreshSuccess = payload => ({
   type: Actions.refreshSuccess,
@@ -17,7 +18,7 @@ const refreshFail = payload => ({
 export const refresh = () => async dispatch => {
   await dispatch(refreshInProgress());
   try {
-    const res = await fetch('http://localhost:5000/api/home', {
+    const res = await fetch(`${url}/api/home`, {
       headers: {
         Authorization: `Token ${localStorage.jwt}`,
       },

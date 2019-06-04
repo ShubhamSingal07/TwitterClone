@@ -1,5 +1,5 @@
 import Actions from '../store/actions';
-import { logout } from './';
+import { logout, url } from './';
 
 const dislikeSuccess = payload => ({
   type: Actions.dislikeSuccess,
@@ -18,7 +18,7 @@ export const dislike = ({ tweetItem, userid }) => async dispatch => {
   const { tweetByUserId, tweetid } = tweetItem;
   await dispatch(dislikeInProgress());
   try {
-    const res = await fetch('http://localhost:5000/api/dislike', {
+    const res = await fetch(`${url}/api/dislike`, {
       method: 'POST',
       headers: {
         Authorization: `Token ${window.localStorage.jwt}`,

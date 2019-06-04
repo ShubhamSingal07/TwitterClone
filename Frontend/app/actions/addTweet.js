@@ -1,5 +1,5 @@
 import Actions from '../store/actions';
-import { logout } from './';
+import { logout, url } from './';
 
 const addTweetSuccess = payload => ({
   type: Actions.addTweetSuccess,
@@ -25,7 +25,7 @@ export const addTweet = tweet => async dispatch => {
     );
   }
   try {
-    const res = await fetch('http://localhost:5000/api/tweets', {
+    const res = await fetch(`${url}/api/tweets`, {
       method: 'POST',
       headers: {
         Authorization: `Token ${localStorage.jwt}`,

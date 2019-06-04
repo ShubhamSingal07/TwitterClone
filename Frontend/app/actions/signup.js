@@ -1,4 +1,5 @@
 import Actions from '../store/actions';
+import { url } from './';
 
 const SignupInProgress = () => ({
   type: Actions.SignupInProgress,
@@ -25,7 +26,7 @@ export const signup = ({ username, password, passwordAgain }) => async dispatch 
   }
   try {
     if (password == passwordAgain) {
-      const res = await fetch('http://localhost:5000/api/signup', {
+      const res = await fetch(`${url}/api/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

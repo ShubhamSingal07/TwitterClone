@@ -1,5 +1,5 @@
 import Actions from '../store/actions';
-import { logout } from './';
+import { logout, url } from './';
 
 const likeSuccess = payload => ({
   type: Actions.likeSuccess,
@@ -18,7 +18,7 @@ export const like = ({ tweetItem, userid }) => async dispatch => {
   const { tweetByUserId, tweetid } = tweetItem;
   await dispatch(likeInProgress());
   try {
-    const res = await fetch('http://localhost:5000/api/like', {
+    const res = await fetch(`${url}/api/like`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

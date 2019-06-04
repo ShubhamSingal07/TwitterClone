@@ -1,5 +1,5 @@
 import Actions from '../store/actions';
-import { logout } from './';
+import { logout, url } from './';
 
 const unfollowInProgress = () => ({
   type: Actions.unfollowInProgress,
@@ -18,7 +18,7 @@ const unfollowSuccess = payload => ({
 export const unfollow = id => async dispatch => {
   await dispatch(unfollowInProgress());
   try {
-    const res = await fetch('http://localhost:5000/api/unfollow', {
+    const res = await fetch(`${url}/api/unfollow`, {
       method: 'POST',
       headers: {
         Authorization: `Token ${localStorage.jwt}`,

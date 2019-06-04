@@ -1,4 +1,5 @@
 import Actions from '../store/actions';
+import { url } from './';
 
 const homepageSuccess = payload => ({
   type: Actions.homepageSuccess,
@@ -21,7 +22,7 @@ const loginFail = payload => ({
 export const fetchHomePage = () => async dispatch => {
   try {
     await dispatch(homepageInProgress());
-    const res = await fetch('http://localhost:5000/api/home', {
+    const res = await fetch(`${url}/api/home`, {
       method: 'POST',
       headers: {
         Authorization: `Token ${localStorage.jwt}`,

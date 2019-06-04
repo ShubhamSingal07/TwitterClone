@@ -1,4 +1,5 @@
 import Actions from '../store/actions';
+import { url } from './';
 
 const loginInProgress = () => ({
   type: Actions.loginInProgress,
@@ -24,7 +25,7 @@ export const login = ({ username, password }) => async dispatch => {
     );
   }
   try {
-    const res = await fetch('http://localhost:5000/api/login', {
+    const res = await fetch(`${url}/api/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

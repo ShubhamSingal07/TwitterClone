@@ -1,5 +1,5 @@
 import Actions from '../store/actions';
-import { logout } from './';
+import { logout, url } from './';
 
 const followInProgress = () => ({
   type: Actions.followInProgress,
@@ -18,7 +18,7 @@ const followSuccess = payload => ({
 export const follow = id => async dispatch => {
   await dispatch(followInProgress());
   try {
-    const res = await fetch('http://localhost:5000/api/follow', {
+    const res = await fetch(`${url}/api/follow`, {
       method: 'POST',
       headers: {
         Authorization: `Token ${localStorage.jwt}`,

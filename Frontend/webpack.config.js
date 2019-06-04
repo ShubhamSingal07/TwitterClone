@@ -15,7 +15,7 @@ module.exports = {
     path: BUILD_DIR,
     filename: 'bundle.[hash].js',
     chunkFilename: '[name].[hash].chunk.js',
-    publicPath: '/',
+    publicPath: './',
   },
   devtool: 'source-map',
   mode: process.env.NODE_ENV || 'development',
