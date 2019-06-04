@@ -1212,7 +1212,7 @@ var unfollow = function unfollow(id) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "url", function() { return url; });
-var url = "https://t-w-i-t-t-e-r-backend.herokuapp.com";
+var url = 'https://t-w-i-t-t-e-r-backend.herokuapp.com';
 
 /***/ }),
 
@@ -45601,4 +45601,4 @@ module.exports = __webpack_require__(/*! G:\Webd\Projects\TwitterClone\Frontend\
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.7e46c95cc0398dd7fdb8.js.map
+//# sourceMappingURL=bundle.1e27368cc634f4deab8c.js.map
