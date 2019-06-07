@@ -8,7 +8,7 @@ const localStorageMiddleware = store => next => action => {
   if (action.type == Actions.SignupSuccess || action.type == Actions.loginSuccess) {
     localStorage.jwt = action.payload.token;
   } else if (action.type == Actions.logout) {
-    localStorage.jwt = '';
+    delete localStorage.jwt;
   }
   next(action);
 };
