@@ -2864,7 +2864,7 @@ var localStorageMiddleware = function localStorageMiddleware(store) {
       if (action.type == _actions__WEBPACK_IMPORTED_MODULE_3__["default"].SignupSuccess || action.type == _actions__WEBPACK_IMPORTED_MODULE_3__["default"].loginSuccess) {
         localStorage.jwt = action.payload.token;
       } else if (action.type == _actions__WEBPACK_IMPORTED_MODULE_3__["default"].logout) {
-        localStorage.jwt = '';
+        delete localStorage.jwt;
       }
 
       next(action);
@@ -45601,4 +45601,4 @@ module.exports = __webpack_require__(/*! G:\Webd\Projects\TwitterClone\Frontend\
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.1e27368cc634f4deab8c.js.map
+//# sourceMappingURL=bundle.24fd3a4a5b644bde499a.js.map
